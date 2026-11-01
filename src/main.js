@@ -128,7 +128,7 @@ function setupChapters(chapters, triggers, lenis) {
   gsap.set(copies.slice(1), { autoAlpha: 0 });
 
   const reveals = copies.map((copy) => {
-    const parts = copy.querySelectorAll('.eyebrow, .chapter__body, .chapter__facts li, .btn');
+    const parts = copy.querySelectorAll('.eyebrow, .chapter__body, .chapter__facts li, .chapter__actions');
     const split = SplitText.create(copy.querySelector('[data-lines]'), {
       type: 'lines',
       mask: 'lines',

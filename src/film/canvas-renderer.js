@@ -1,9 +1,11 @@
 // Draws one frame on a 2D canvas, fitted around a horizontal focus point.
-// A frame that fills the canvas is cover-fitted and centred. On a canvas
+// The canvas covers the whole stage, but frames are fitted to the area below
+// its --film-inset (the floating header), so nothing the camera shows sits
+// behind the header; the frame's backdrop is extended up into the inset. A
+// frame that fills that area is cover-fitted and centred in it. In an area
 // taller than the frame (a phone held upright), the frame is fitted to the
-// width and anchored to the bottom, and its backdrop is extended upward, so
-// the subject sits lower and clear of the copy at the top. Redraws only when
-// the frame or the canvas size changes.
+// width and anchored to the bottom, so the subject sits lower and clear of
+// the copy at the top. Redraws only when the frame or the canvas size changes.
 
 const MAX_PIXEL_RATIO = 2;
 // The largest share of the canvas height left to the extended backdrop; a
@@ -31,7 +33,9 @@ export class CanvasRenderer {
     this.ratio = Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
     const width = Math.round(this.canvas.clientWidth * this.ratio);
     const height = Math.round(this.canvas.clientHeight * this.ratio);
-    if (width === this.canvas.width && height === this.canvas.height) return;
+    const inset = (parseFloat(getComputedStyle(this.canvas).getPropertyValue('--film-inset')) || 0) * this.ratio;
+    if (width === this.canvas.width && height === this.canvas.height && inset === this.inset) return;
+    this.inset = inset;
     this.canvas.width = width;
     this.canvas.height = height;
     this.context.imageSmoothingQuality = 'high';
@@ -52,20 +56,21 @@ export class CanvasRenderer {
 
     const { image, focusX } = frame;
     const { width, height } = this.canvas;
+    const area = height - this.inset;
     const scale = Math.max(
       width / image.naturalWidth,
-      (height * (1 - MAX_BACKDROP_SHARE)) / image.naturalHeight,
+      (area * (1 - MAX_BACKDROP_SHARE)) / image.naturalHeight,
     );
     const drawWidth = image.naturalWidth * scale;
     const drawHeight = image.naturalHeight * scale;
     const x = (width - drawWidth) * focusX;
+    const top = drawHeight >= area ? this.inset + (area - drawHeight) / 2 : height - drawHeight;
 
-    if (drawHeight >= height) {
-      this.context.drawImage(image, x, (height - drawHeight) / 2, drawWidth, drawHeight);
+    if (top <= 0) {
+      this.context.drawImage(image, x, top, drawWidth, drawHeight);
       return;
     }
 
-    const top = height - drawHeight;
     const feather = Math.min(FEATHER * this.ratio, drawHeight);
     const backdrop = this.backdropColour(image);
     this.context.fillStyle = backdrop.opaque;

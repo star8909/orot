@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&family=Gowun+Batang&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
       rel="stylesheet"
     />
     <link
@@ -21,10 +21,9 @@
     />
   </head>
   <body>
+    <!-- A floating pill over the film rather than a full-width bar, so the
+         film keeps the whole screen. -->
     <header class="header">
-      <p class="header__bar">
-        <span>첫 구매 15% 할인 · 3만 원 이상 무료배송</span>
-      </p>
       <div class="header__main">
         <a class="header__logo" href="#top">OROT</a>
         <nav class="header__nav" aria-label="주요 메뉴">
@@ -32,9 +31,13 @@
           <a href="#ingredients">성분</a>
           <a href="#lineup">라인업</a>
         </nav>
-        <a class="header__cta" href="#lineup">
-          장바구니 <span class="header__count" data-cart-count>0</span>
+        <a class="header__cart" href="#lineup" aria-label="장바구니">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M6 8h12l-1 12H7L6 8Z M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+          <span class="header__count" data-cart-count>0</span>
         </a>
+        <a class="header__shop" href="#lineup">구매하기</a>
       </div>
     </header>
 
@@ -52,17 +55,20 @@
         <div class="story__scrim" aria-hidden="true"></div>
 
         <div class="chapter__copy" data-copy>
-          <p class="eyebrow">Camellia Water Cream</p>
-          <h1 class="chapter__title" id="title-blooming" data-lines>피어나는<br />수분 한 송이</h1>
+          <p class="eyebrow">Camellia Water Cream · Jeju</p>
+          <h1 class="chapter__title" id="title-blooming" data-lines>피어나는<br /><em>수분 한 송이.</em></h1>
           <p class="chapter__body">
             제주 동백꽃잎에서 길어 올린 수분을 한 통의 젤 크림에 담았어요.
           </p>
-          <a class="btn" href="#lineup">라인업 보기</a>
+          <div class="chapter__actions">
+            <button class="btn" type="button" data-add-to-cart="cream">장바구니 담기 · 38,000원</button>
+            <a class="link" href="#lineup">라인업 보기</a>
+          </div>
         </div>
 
         <div class="chapter__copy" data-copy>
           <p class="eyebrow">Texture</p>
-          <h2 class="chapter__title" id="title-rising" data-lines>가볍게,<br />떠오르듯</h2>
+          <h2 class="chapter__title" id="title-rising" data-lines>가볍게,<br /><em>떠오르듯.</em></h2>
           <p class="chapter__body">
             물처럼 가벼운 젤이 바르는 순간 스며들어 끈적임 없이 마무리돼요.
           </p>
@@ -70,7 +76,7 @@
 
         <div class="chapter__copy chapter__copy--bottom" data-copy>
           <p class="eyebrow">Ingredients</p>
-          <h2 class="chapter__title" id="title-opening" data-lines>열면 번지는<br />동백 향기</h2>
+          <h2 class="chapter__title" id="title-opening" data-lines>열면 번지는<br /><em>동백 향기.</em></h2>
           <ul class="chapter__facts">
             <li><strong>10,000&nbsp;ppm</strong> 제주 동백꽃 추출물</li>
             <li><strong>5%</strong> 판테놀</li>
@@ -80,7 +86,7 @@
 
         <div class="chapter__copy chapter__copy--bottom" data-copy>
           <p class="eyebrow">Hydration</p>
-          <h2 class="chapter__title" id="title-misting" data-lines>하루 종일,<br />촉촉하게</h2>
+          <h2 class="chapter__title" id="title-misting" data-lines>하루 종일,<br /><em>촉촉하게.</em></h2>
           <p class="chapter__body">
             다섯 가지 히알루론산이 피부 결 사이사이를 채워 속건조까지 잡아줘요.
           </p>
@@ -88,16 +94,19 @@
 
         <div class="chapter__copy" data-copy>
           <p class="eyebrow">Clean Formula</p>
-          <h2 class="chapter__title" id="title-settling" data-lines>순하게,<br />오롯이</h2>
+          <h2 class="chapter__title" id="title-settling" data-lines>순하게,<br /><em>오롯이.</em></h2>
           <p class="chapter__body">
             비건 포뮬러 · 인공 향료 무첨가. 민감한 피부도 아침저녁 매일.
           </p>
         </div>
 
         <div class="chapter__copy chapter__copy--center" data-copy>
-          <h2 class="chapter__title" id="title-finale" data-lines>오늘 밤,<br />동백 한 송이</h2>
+          <p class="eyebrow">Tonight</p>
+          <h2 class="chapter__title" id="title-finale" data-lines>오늘 밤,<br /><em>동백 한 송이.</em></h2>
           <p class="chapter__body">동백 워터 크림 50&nbsp;ml · 38,000원</p>
-          <button class="btn" type="button" data-add-to-cart="cream">장바구니 담기</button>
+          <div class="chapter__actions">
+            <button class="btn" type="button" data-add-to-cart="cream">장바구니 담기</button>
+          </div>
         </div>
 
         <div class="scroll-hint" data-scroll-hint aria-hidden="true">
@@ -123,8 +132,9 @@
     <section class="lineup" id="lineup" aria-labelledby="title-lineup">
       <div class="lineup__head">
         <p class="eyebrow">The Camellia Ritual</p>
-        <h2 class="lineup__title" id="title-lineup">네 단계, 하나의 동백</h2>
+        <h2 class="lineup__title" id="title-lineup">네 단계, <em>하나의 동백.</em></h2>
         <p class="lineup__lead">내 피부 타입을 고르면 맞는 단계를 골라드려요.</p>
+        <p class="lineup__offer">첫 구매 15% 할인 · 3만 원 이상 무료배송</p>
         <div class="skin-filter" role="group" aria-label="피부 타입">
           <button type="button" class="skin-filter__option" data-skin-option="all" aria-pressed="true">전체</button>
           <button type="button" class="skin-filter__option" data-skin-option="dry" aria-pressed="false">건성</button>
